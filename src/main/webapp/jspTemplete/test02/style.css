@@ -1,0 +1,17 @@
+@charset "UTF-8";
+
+header {
+	height: 100px;
+}
+
+.main-menu {
+	height: 50px;
+}
+
+.indent{
+	text-indent: 50px;
+}
+
+footer{
+	height: 100px;
+}

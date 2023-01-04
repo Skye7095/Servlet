@@ -8,7 +8,29 @@
 </head>
 <body>
 	<%
-		String cmString = request.getParameter("cm");
+		// cm단위, 변환할 단위들
+		int length = Integer.parseInt(request.getParameter("length"));
+		// inch, yard, feet, meter
+		String[] units = request.getParameterValues("unit");
+		
+		String result = "";
+		for(int i = 0; i < units.length; i++){
+			if(units[i].equals("inch")){
+				double inch = length * 0.39;
+				result += inch + "in<br>";
+			}else if(units[i].equals("yard")){
+				double yard = length * 0.010936133;
+				result += yard + "yd<br>";
+			}else if(units[i].equals("feet")){
+				double feet = length * 0.032808399;
+				result += feet +"ft<br>";
+			}else{
+				double meter = length / 100.0;
+				result += meter + "m<br>";
+			}
+		}
+	
+		/* String cmString = request.getParameter("cm");
 		int cm = Integer.parseInt(cmString);
 		
 		double in = cm / 2.54;
@@ -34,11 +56,13 @@
 			}else{
 				result += mString + "<br>";
 			}
-		}
+		} */
 		
 	%>
 	
 	<h1>변환 결과</h1>
-	<div><%= result %></div>
+	<h3> <%= length %></h3>
+	<hr>
+	<h3><%= result %></h3>
 </body>
 </html>
