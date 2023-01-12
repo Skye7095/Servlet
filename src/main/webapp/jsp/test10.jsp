@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ page import="java.util.*" %>
+<%@ page import="java.text.SimpleDateFormat" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -14,22 +15,23 @@
 </head>
 <body>
 	<%
-		 Calendar today = Calendar.getInstance();
-		int date = today.get(Calendar.DATE);
-		int year = today.get(Calendar.YEAR);
-		int month = today.get(Calendar.MONTH) + 1;
+		Calendar today = Calendar.getInstance();
+		SimpleDateFormat formatter= new SimpleDateFormat("yyyy-MM");
 		
-		// 오늘은 이번달의 몇째 주
-		int wom = today.get(Calendar.WEEK_OF_MONTH); //1
-		// 오늘의 요일
-		int dow = today.get(Calendar.DAY_OF_WEEK); //3
-		// 해당 월의 마지막 날
+		String title = formatter.format(today.getTime());
+		
+		// 이번달의 마지막 날
 		int lastDate = today.getActualMaximum(Calendar.DATE);
+		
+		// 이번달 첫날로 set > 즉, x월1일
+		today.set(Calendar.DAY_OF_MONTH, 1);
+		// 위에 날짜의 요일 반환 > 즉, 이번달 1일의 요일 반환.(일:1 ~ 토:7)
+		int dow = today.get(Calendar.DAY_OF_WEEK);
 		
 	%>
 	
 	<div class="container">
-		<h1 class="text-center"><%= year %>-<%= month %></h1>
+		<h1 class="text-center"><%= title %></h1>
 		<table class="table text-center">
 			<thead>
 				<tr>
@@ -42,21 +44,24 @@
 					<th>토</th>
 				</tr>
 			</thead>
-				<% for(int i = 1; i <= lastDate / 7; i++){ 
-					
-				%>
 				<tr>
-				<%	int days = i * (date - (wom -1)*7 -dow); %>
-					<td><%= days + 1 %></td>
-					<td><%= days + 2 %></td>
-					<td><%= days + 3 %></td>
-					<td><%= days + 4 %></td>
-					<td><%= days + 5 %></td>
-					<td><%= days + 6 %></td>
-					<td><%= days + 7 %></td>
+				<%-- 이번달 첫날 요일 전에 비어두기 --%> 
+				<% if(dow != 1){
+				for(int i = 1; i <= dow; i++){
+				%>
+					<td></td>
+				<% }
+				} %>
+				
+				<%for(int j = 1; j <= lastDate; j++){ 
+				%>
+					<td><%= j %></td>
+					<!-- 토요일인 날짜 출력 후 다음 줄로 이동 -->
+					<%if(j % (7 - dow + 1) == 0){  %>
+					<tr></tr>
+				<%	} 
+				} %>
 				</tr>
-				<%	
-				   } %>
 			<tbody>
 				
 			</tbody>

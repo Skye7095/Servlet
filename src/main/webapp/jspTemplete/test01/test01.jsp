@@ -54,7 +54,7 @@
 	    map = new HashMap<String, String>() {{ put("ch", "121"); put("name", "KBSN 스포츠"); put("category", "스포츠"); } };
 	    list.add(map);
 	    
-
+	    String category = request.getParameter("category");
 	%>
 
 	<div class="container">
@@ -71,13 +71,17 @@
 				</thead>
 				
 				<tbody>
-				<%for(Map<String, String> details:list){ %>
+				<%for(Map<String, String> details:list){ 
+					// 카테고리가 일치하면 테이블에 value를 호출한 <tr> 추가
+					// 카테고리가 없으도 value를 호출함. > || category == null
+					if(category == null || details.get("category").equals(category)){%>
 					<tr>
 						<td><%= details.get("ch") %></td>
 						<td><%= details.get("name") %></td>
 						<td><%= details.get("category") %></td>
-					</tr>
-				<%} %>
+					</tr>					
+				<% 	}
+				  } %>
 				</tbody>
 			</table>
 		</section>
