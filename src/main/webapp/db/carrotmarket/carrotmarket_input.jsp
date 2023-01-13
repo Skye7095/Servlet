@@ -23,9 +23,9 @@
 		
 		String query = "SELECT * FROM `seller`;";
 
-		
 		ResultSet resultSet = mysqlService.select(query);
 
+		// String[] sellerIds = request.getParameterValues("select");
 		
 	
 	%>
@@ -38,8 +38,8 @@
 				<h1>물건 올리기</h1>
 				<form method="post" action="/db/carrotmarket/carrotmarket/insert">
 					<div class="d-flex justify-content-around">
-						<select class="form-select mt-3">
-						    <option selected>-아이디 선택-</option>
+						<select class="form-select mt-3" id="sellerId" name="sellerId">
+						    <option>-아이디 선택-</option>
 						    <%while(resultSet.next()) {%>
 						    <option value="<%= resultSet.getInt("id")%>"><%= resultSet.getString("nickname") %></option>
 						    <%} %>
@@ -61,5 +61,33 @@
 		</section>
 		<jsp:include page="footer.jsp" />
 	</div>
+	
+	<script>
+		$(document).ready(function(){
+			$("#sellerId").on("change", function(){
+				var sellerId = $("#sellerId option:selected").val();
+				if(sellerId == null){
+					alert("판매자 선택해주세요");
+					return;
+				}
+			});
+			
+			$("#title").on("input", function(){
+				var title = $("#title").val();
+				if(title == null){
+					alert("제목 입력해주세요");
+					return;
+				}
+			});
+			
+			$("#price").on("input", function(){
+				var price = $("#price").val();
+				if(price == null){
+					alert("가격 입력해주세요");
+					return;
+				}
+			});
+		});
+	</script>
 </body>
 </html>
