@@ -26,7 +26,7 @@ public class CarrotmarketInsertController extends HttpServlet {
 		
 		String query = "SELECT * FROM `used_goods` JOIN `seller` ON used_goods.sellerId = seller.id;\r\n"
 				+ "INSERT INTO `used_goods`\r\n"
-				+ "(`sellerId`, `title`, `price`, `description`, `picture`, `createdAt`, `upgratedAt`)\r\n"
+				+ "(seller.id, used_goods.title, used_goods.price, used_goods.description, used_goods.picture, used_goods.createdAt, used_goods.upgratedAt)\r\n"
 				+ "VALUES\r\n"
 				+ "(" + sellerId +  "," + title + "," + price + "," + description + "," + picture + ", now(), now())";
 		

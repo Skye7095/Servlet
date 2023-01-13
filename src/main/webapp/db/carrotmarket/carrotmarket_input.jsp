@@ -24,8 +24,6 @@
 		String query = "SELECT * FROM `seller`;";
 
 		ResultSet resultSet = mysqlService.select(query);
-
-		// String[] sellerIds = request.getParameterValues("select");
 		
 	
 	%>
